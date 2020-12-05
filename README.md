@@ -1,2 +1,2 @@
 # The-Lion-Bot
-The Lion Bot Discord
+To Be worked
