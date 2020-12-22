@@ -30,14 +30,9 @@ If you are using Windows, then the following should be used instead:
 py -3 -m pip install -U discord.py
 ```
 
-* 2. Install the menus extension of the discord.py module
-```
-py -3 -m pip install -U git+https://github.com/Rapptz/discord-ext-menus
-```
-
-* 3. Navigate to the THIS_MY_TOKEN_HEHE.txt file
+* 2. Navigate to the THIS_MY_TOKEN_HEHE.txt file
 
 Insert the token of your bot instance into the text file.
 
-* 4. Run the bot instance and enjoy! 
+* 3. Run the bot instance and enjoy! 
 
