@@ -1,0 +1,7 @@
+*.txt
+*.log
+*.sqlite
+debugger.py
+Procfile
+.env
+*.pyc
