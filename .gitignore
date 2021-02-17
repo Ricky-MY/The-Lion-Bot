@@ -1,7 +1,6 @@
 *.txt
 *.log
-*.sqlite
+*.pyc
 debugger.py
 Procfile
 .env
-*.pyc

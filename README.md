@@ -13,15 +13,16 @@ Multi-purposed discord bot authored in the python language that consists of feat
 
 ### Explanation 
 **=** Commands In Cogs
-Commands that shares a similar purpose are collected in a cog that is named appropriately within (*./cogs*)
+Commands that shares a similar purpose are collected in a cog that is named appropriately within (*./bot*)
 
 
 ### Installation
 To run this project, install it locally by following these steps:
 
-* 1. Install the discord.py module
+* 1. Install the discord.py module (USE PYTHON 3.8 OR ABOVE)
 
 You can get the library directly from PyPI:
+On macOS:
 ```
 python3 -m pip install -U discord.py
 ```
@@ -30,9 +31,27 @@ If you are using Windows, then the following should be used instead:
 py -3 -m pip install -U discord.py
 ```
 
-* 2. Navigate to the THIS_MY_TOKEN_HEHE.txt file
+* 2. Install the menus extension of the discord.py module
+```
+py -3 -m pip install -U git+https://github.com/Rapptz/discord-ext-menus
+```
+If you don't have git, make sure to install it before the menus extension.
 
-Insert the token of your bot instance into the text file.
+* 3. Setup dotenv for token feeding
 
-* 3. Run the bot instance and enjoy! 
+a. Install python-dotenv
+macOS:
+```
+python3 -m pip install python-dotenv
+```
+Windows:
+```
+py -3 -m pip install python-dotenv
+```
+b. Create a `.env` file in the root directory
+This must be in the same directory as `__main__.py`
 
+d. Insert in your token
+~~~
+TOKEN="YOUR_TOKEN"
+~~~
