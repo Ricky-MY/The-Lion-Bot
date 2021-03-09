@@ -1,10 +1,20 @@
 import discord
 import traceback
 import sys
+import yaml
+
 from discord.ext import commands
 from discord import errors
 
-async def raise_norm(ctx, error):
+from bot.moderation.admin import bot_admin_check
+
+async def raise_norm(ctx, debug_mode, error):
+    if debug_mode:
+        report = ''.join(traceback.format_exception(type(error), error, error.__traceback__))
+        embed = discord.Embed(title='🖐️ Unhandled exception...', description=f"```py\n{report + '```' if len(report) < 2000 else report[-2000:] + f'``` and {len(report) - 2000} more characters...'}", color=discord.Color.dark_grey())
+        embed.add_field(name="Error", value=f"```{error}```")
+        await ctx.reply(embed=embed)
+        return
     print(f'Ignoring exception in command {ctx.command}:')
     traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
@@ -13,10 +23,19 @@ def get_usage(ctx):
 
 class ExceptionHandler(commands.Cog):
     
-    def __init__(self, client):
-        self.client = client
-        self.color = 0xC0C0C0
-        self.error_color = discord.Color.dark_red()
+    def __init__(self, bot):
+        self.bot = bot
+        with open("config.yaml", 'r') as file:
+            config = yaml.load(file, Loader=yaml.SafeLoader)
+        self.color = config["asthetics"]["mainColor"]
+        self.error_color = config["asthetics"]["errorColor"]
+        self.debug_mode = False
+
+    @commands.command(name = "debug", aliases=['d'])
+    @commands.check(bot_admin_check)
+    async def enable_debug(self, ctx):
+        self.debug_mode = not self.debug_mode
+        await ctx.reply(f"Debug mode is turned {'on' if self.debug_mode else 'off'}", mention_author = False)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -41,7 +60,17 @@ class ExceptionHandler(commands.Cog):
                 await ctx.author.send(f'⚠️ {str(ctx.command).upper()} cannot be used in Private Messages.')
             except discord.HTTPException:
                 pass
-        
+
+        if isinstance(error, errors.Forbidden):
+            embed = discord.Embed(title='🖐️ Hold it...', description=f"⁉️ Required permission is missing or unattainable.", color=self.error_color)
+            embed.set_footer(text="Unable to carry out this task.")
+            await ctx.send(embed=embed)
+
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(title="⚠️ Unable to proceed...", description=f"Vital argument `{error.param.name}` is missing.", color=self.error_color)
+            embed.set_footer(text=get_usage(ctx))
+            await ctx.send(embed=embed)
+
         else:
             if ctx.command.qualified_name.lower() in ('reload', 'unload', 'load'):
                 if isinstance(error, commands.ExtensionNotFound):
@@ -51,27 +80,26 @@ class ExceptionHandler(commands.Cog):
                 elif isinstance(error, commands.ExtensionAlreadyLoaded):
                     await ctx.send("⚠️ Extension has been already loaded.")
                 else:
-                    await raise_norm(ctx, error)
+                    await raise_norm(ctx, self.debug_mode, error)
+
+            elif cog.qualified_name in ('Verifier', 'Authenticator'):
+                if isinstance(error, commands.BadArgument):
+                    embed = discord.Embed(title="⚠️ Unable to proceed...", description=f"I cannot find the user specified.", color=self.error_color)
+                    embed.set_footer(text=get_usage(ctx))
+                    await ctx.send(embed=embed)
+                else:
+                    await raise_norm(ctx, self.debug_mode, error)
             elif ctx.command.qualified_name in ('kick', 'ban', 'mute'):
                 if isinstance(error, commands.BadArgument):
                     embed = discord.Embed(title='⚠️ Unable to proceed...', description=f"I cannot find the user specified.", color=self.error_color)
                     embed.set_footer(text=get_usage(ctx))
                     await ctx.send(embed=embed)
-                elif isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(title='⚠️ Unable to proceed...', description=f"`User` and `Reason` are required arguments, make sure to add them.", color=self.error_color)
-                    embed.set_footer(text=get_usage(ctx))
-                    await ctx.send(embed=embed)
                 else:
-                    await raise_norm(ctx, error)
+                    await raise_norm(ctx, self.debug_mode, error)
             else:
-                await raise_norm(ctx, error)
+                await raise_norm(ctx, self.debug_mode, error)
 
-        if isinstance(error, errors.Forbidden):
-            embed = discord.Embed(title='⚠️ Unable to proceed...', description=f"Required permission is missing.", color=self.error_color)
-            embed.set_footer(text=get_usage(ctx))
-            await ctx.send(embed=embed)
-
-def setup(client):
-    client.add_cog(ExceptionHandler(client))
+def setup(bot):
+    bot.add_cog(ExceptionHandler(bot))
     print('Exception handler is loaded')
 
