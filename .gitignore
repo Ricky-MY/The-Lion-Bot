@@ -3,4 +3,5 @@
 *.pyc
 debugger.py
 Procfile
+dependencies
 .env
