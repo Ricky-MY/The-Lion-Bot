@@ -5,3 +5,4 @@ debugger.py
 Procfile
 dependencies
 .env
+.vscode
