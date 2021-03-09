@@ -10,10 +10,12 @@ from dotenv import load_dotenv
 from os import listdir, getenv
 
 from bot.utilities.prefixes import Prefixes
+from bot.moderation.admin import bot_admin_check
 
-
-def botAdminCheck(ctx):
-	return ctx.message.author.id == 368671236370464769
+"""TODO: Continue saving prompts for AEGIS, TAG, TYPEWRITER
+Add a hyperlink to the message in FAILURE TO SEND SOURCE CODE
+Disable the option to view administrative source code at all
+Add commands SILENCE, UNSILENCE, SELFMUTE"""
 
 intents = Intents.default()
 intents.reactions = True
@@ -25,15 +27,14 @@ bot.remove_command('help')
 # Shut Down Command
 @bot.command(name="shutdown")
 @commands.guild_only()
-@commands.check(botAdminCheck)
+@commands.check(bot_admin_check)
 async def shutdown(ctx):
 	await ctx.send('Bot has been shut down.')
 	await bot.logout()
 
 @bot.event
 async def on_ready():
-	print("____________\nThe Lion bot is on standby\n____________")
-	await bot.change_presence()
+	print("____________\nPill is on standby\n____________")
 
 parentdir = 'bot'
 for filename in listdir(f'./{parentdir}'):
