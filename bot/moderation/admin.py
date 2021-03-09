@@ -1,12 +1,15 @@
 import discord
-import json
+import yaml
 
-from discord.ext import commands
 from os import listdir
+from discord.ext import commands
 from discord.ext.commands.errors import ExtensionNotFound
 from discord.ext.commands.errors import ExtensionNotLoaded
 
 from bot.utilities.prefixes import Prefixes
+
+def bot_admin_check(ctx):
+	return ctx.message.author.id == 368671236370464769
 
 class Admin(commands.Cog):
 	
@@ -18,8 +21,10 @@ class Admin(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
-		self.color = 0x87ceeb
-		self.main_directory = 'bot'
+		with open("config.yaml", 'r') as file:
+			config = yaml.load(file, Loader=yaml.SafeLoader)
+		self.color = config["asthetics"]["mainColor"]
+		self.main_directory = config["dirLayout"]["d"]
 
 	def botAdminCheck(ctx):
 		return ctx.message.author.id == 368671236370464769 # change this number to your ID
@@ -42,8 +47,6 @@ class Admin(commands.Cog):
 	@commands.command(name="load", aliases=['l'])
 	@commands.check(botAdminCheck)
 	async def load_cog(self, ctx, extension):
-		embed = discord.Embed(title='Success!', description=f'{extension} is loaded.',
-										color=self.color)
 		for subdir in listdir(f'{self.main_directory}'):
 			try:
 				self.bot.load_extension(f'{self.main_directory}.{subdir}.{extension}')
@@ -52,7 +55,7 @@ class Admin(commands.Cog):
 			except ExtensionNotFound:
 				pass
 			else:
-				await ctx.send(embed=embed)
+				await ctx.message.add_reaction("☑️")
 				return
 		raise ExtensionNotFound(extension)
 
@@ -60,8 +63,6 @@ class Admin(commands.Cog):
 	@commands.command(name="unload", aliases=['ul'])
 	@commands.check(botAdminCheck)
 	async def unload_cog(self, ctx, extension):
-		embed = discord.Embed(title='Success!', description=f'{extension} is loaded.',
-										color=self.color)
 		for subdir in listdir(f'{self.main_directory}'):
 			try:
 				self.bot.unload_extension(f'{self.main_directory}.{subdir}.{extension}')
@@ -70,7 +71,7 @@ class Admin(commands.Cog):
 			except ExtensionNotFound:
 				pass
 			else:
-				await ctx.send(embed=embed)
+				await ctx.message.add_reaction("☑️")
 				return
 		raise ExtensionNotFound(extension)
 
@@ -78,8 +79,6 @@ class Admin(commands.Cog):
 	@commands.command(name="reload", aliases=['rl'])
 	@commands.check(botAdminCheck)
 	async def reload_cog(self, ctx, extension):
-		embed = discord.Embed(title='Success!', description=f'{extension} is reloaded.',
-										color=self.color)
 		for subdir in listdir(f'{self.main_directory}'):
 			try:
 				self.bot.reload_extension(f'{self.main_directory}.{subdir}.{extension}')
@@ -88,7 +87,7 @@ class Admin(commands.Cog):
 			except ExtensionNotFound:
 				pass
 			else:
-				await ctx.send(embed=embed)
+				await ctx.message.add_reaction("☑️")
 				return
 		raise ExtensionNotFound(extension)
 
@@ -100,7 +99,7 @@ class Admin(commands.Cog):
 			for files in listdir(f'./{self.main_directory}/{subdir}/'):
 				if files.endswith('.py') and not files.startswith('_'):
 					self.bot.reload_extension(f'{self.main_directory}.{subdir}.{files[:-3]}')
-		await ctx.send(embed=discord.Embed(title='Success!', description=f'Bot has restarted', color=self.color))
+		await ctx.message.add_reaction("☑️")
 
 	@commands.command(name='alter status', aliases = ['as', 'changeStatus', 'chs', 'changestatus', 'change_status'])
 	@commands.check(botAdminCheck)
