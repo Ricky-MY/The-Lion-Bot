@@ -9,7 +9,7 @@ class Tags(commands.Cog):
 	def botAdminCheck(ctx):
 		return ctx.message.author.id == 368671236370464769
 
-	@commands.group(name="gtag", aliases=["gt"], invoke_without_command=True)
+	@commands.group(name="gtag", aliases=["gt", "globtag"], invoke_without_command=True)
 	async def global_tags(self, ctx, name):
 		db = sqlite3.connect('main.sqlite')
 		cursor = db.cursor()
@@ -35,6 +35,7 @@ class Tags(commands.Cog):
 		db.commit()
 		cursor.close()
 		db.close()
+		
 	@global_tags.command()
 	@commands.check(botAdminCheck)
 	async def remove(self, ctx, name):
