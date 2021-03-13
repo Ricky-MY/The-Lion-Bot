@@ -31,6 +31,8 @@ class Authenticator(Cog):
 	@commands.group(name= "authenticator", invoke_without_command=True, aliases=['auth', 'a'])
 	@commands.guild_only()
 	async def authenticator(self, ctx, *, key):
+		"""This command is used to authenticate as a EP(exclusive permissable) using a key provided by the admins"""
+
 		with open(self.resources + 'keys.txt', 'r') as file:
 			keys = [key_item[:-1] for key_item in file]
 		if key in keys:
@@ -51,6 +53,8 @@ class Authenticator(Cog):
 	@authenticator.command(name = "create")
 	@commands.has_guild_permissions(manage_guild =True)
 	async def create(self, ctx, *, limit = 1):
+		"""Creates unique authentication keys that can be used to access a component. If no limit is provided, it will create only one key."""
+
 		if limit <= 0 or limit > 100:
 			embed = discord.Embed(title=f'ERROR...', description=f'You have entered an invalid limit!\nMake sure to set a limit between 1 to 100.', color=self.error_color)
 			embed.set_footer(text=f'Usage: {ctx.prefix}{ctx.command.qualified_name} {ctx.command.signature}', icon_url=self.bot.user.avatar_url)
@@ -74,6 +78,8 @@ class Authenticator(Cog):
 	@authenticator.command(name = "dump", aliases =["clear", "delete", "flush"])
 	@commands.has_guild_permissions(manage_guild =True)
 	async def dump(self, ctx):
+		"""Removes all active authentication keys for the server. Refer to the aegis help menu for further commands."""
+		
 		channel = ctx.channel
 		embed = discord.Embed(title=f'HOLD UPPP...', description=f'Type in `confirm` to confirm the deletion of all keys.', color=self.error_color)
 		embed.set_footer(text=f'THIS PROCESS IS IRREVERTIBLE',
@@ -90,6 +96,8 @@ class Authenticator(Cog):
 	@authenticator.command(aliases=['stats'])
 	@commands.has_guild_permissions(manage_guild =True)
 	async def statistics(self, ctx):
+		"""Checks how many active authentication keys there are on the current server."""
+		
 		with open(self.resources+ 'keys.txt','r') as file:
 			keys = [key for key in file]
 		embed = discord.Embed(title=f'Authenticator statistics', description=f'Total valid keys left : {len(keys)}', color=self.color)

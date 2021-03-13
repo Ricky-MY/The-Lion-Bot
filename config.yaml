@@ -7,9 +7,12 @@ asthetics:
 # The directory layout for importing purposes d < e < f
 dirLayout:
     d: bot
-    e: auth, fun, moderation, resources, utilities
+    e: aegis, fun, moderation, resources, utilities
     f: fun_cosmetics, __pycache__
 
 directories:
     assets: bot/resources/
     prompts: bot/resources/prompts.yaml
+
+moderation:
+    helpChannel: 819102932712554576

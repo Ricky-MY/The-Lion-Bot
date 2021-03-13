@@ -27,6 +27,8 @@ class Verifier(commands.Cog):
 	@commands.command(name = "verify", alisaes="vf")
 	@commands.guild_only()
 	async def verify(self, ctx):
+		"""One time verification process that validates whether if the user is a human."""
+
 		guild = ctx.guild
 		user_id = ctx.author.id
 		channel = ctx.channel

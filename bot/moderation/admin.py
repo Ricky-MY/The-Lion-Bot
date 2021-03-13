@@ -36,6 +36,7 @@ class Admin(commands.Cog):
 	@commands.guild_only()
 	@commands.check(botAdminCheck)
 	async def guilds(self, ctx):
+		"""Checks how many guilds the bot is in with each and every guild specified in an embed."""
 		guilds = [i.name for i in self.bot.guilds]
 		text = '\n'.join(guilds)
 		embed = discord.Embed(title="Guilds Joined", description = f"{text}", colour=self.color)
@@ -47,6 +48,7 @@ class Admin(commands.Cog):
 	@commands.command(name="load", aliases=['l'])
 	@commands.check(botAdminCheck)
 	async def load_cog(self, ctx, extension):
+		"""Loads a cog."""
 		for subdir in listdir(f'{self.main_directory}'):
 			try:
 				self.bot.load_extension(f'{self.main_directory}.{subdir}.{extension}')
@@ -63,6 +65,7 @@ class Admin(commands.Cog):
 	@commands.command(name="unload", aliases=['ul'])
 	@commands.check(botAdminCheck)
 	async def unload_cog(self, ctx, extension):
+		"""Unloads a cog."""
 		for subdir in listdir(f'{self.main_directory}'):
 			try:
 				self.bot.unload_extension(f'{self.main_directory}.{subdir}.{extension}')
@@ -79,6 +82,7 @@ class Admin(commands.Cog):
 	@commands.command(name="reload", aliases=['rl'])
 	@commands.check(botAdminCheck)
 	async def reload_cog(self, ctx, extension):
+		"""Reloads a cog."""
 		for subdir in listdir(f'{self.main_directory}'):
 			try:
 				self.bot.reload_extension(f'{self.main_directory}.{subdir}.{extension}')
@@ -95,6 +99,7 @@ class Admin(commands.Cog):
 	@commands.command(name="restart", aliases=['rst', 'sync'])
 	@commands.check(botAdminCheck)
 	async def restart(self, ctx):
+		"""Reloads every cog connected to the bot."""
 		for subdir in listdir(f'./{self.main_directory}/'):
 			for files in listdir(f'./{self.main_directory}/{subdir}/'):
 				if files.endswith('.py') and not files.startswith('_'):

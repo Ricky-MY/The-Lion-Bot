@@ -6,18 +6,14 @@ class Aegis(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot=bot
-		
-	def botAdminCheck(ctx):
-		return ctx.message.author.id == 368671236370464769
 
 	@commands.group()
 	@commands.guild_only()
 	async def aegis(self, ctx):
 		if ctx.invoked_subcommand is None:
-			guild = ctx.guild
 			embed=discord.Embed(title='=Aegis Module Accessed=', description="Aegis module is designed to provide protectection to guilds and to prevent raids. NOTE: GRATZ TO YOU FINDING THIS UNINDEXED MODULE BUT CAUTION, IT IS EXTREMELY BUGGED AND IT COULD CAUSE HUGE ERRORS, DO NOT USE THE COMMANDS", color=discord.Color.dark_gold())
 			embed.add_field(name='Void', value=f"`Aegis V0id implements all acessible invites to be exiled. Putting the server in v0id.`")
-#			embed.add_field(name='Smoke', value=f'`Aegis smoke strips away the ability of everyone to see text channels. BUGGED`')
+ 			embed.add_field(name='Smoke', value=f'`Aegis smoke strips away the ability of everyone to see text channels. BUGGED`')
 			embed.add_field(name='Chernobyl', value=f'`Aegis Chernobyl removes members that had joined before a specified time. This is a kick. V0id and Chernobyl can be used to prevent alts joining in.`')
 			embed.add_field(name='Paris', value=f'`==`')
 			embed.add_field(name='LoveCanal', value=f'`==`')

@@ -11,9 +11,10 @@ class Silent(commands.Cog):
         self.color = 0xC0C0C0
         self.silented_channels = []
     
-    @commands.command()
+    @commands.command(name="silent", aliases=["silence", "hush", "nightnight", "sleepy"])
     @commands.has_guild_permissions(manage_channels = True)
     async def silent(self, ctx):
+        """Removes texting access from everyone on the channel invoked in."""
         channel = ctx.channel
         if channel not in self.silented_channels:
             await channel.set_permissions(ctx.guild.default_role, send_messages=False)
@@ -22,9 +23,10 @@ class Silent(commands.Cog):
         elif channel in self.silented_channels:
             await ctx.send(f"⁉️ Channel is already silenced.")
 
-    @commands.command()
+    @commands.command(name="unsilent", aliases=["unsilence", "wakeup", "unhush"])
     @commands.has_guild_permissions(manage_channels = True)
     async def unsilent(self, ctx):
+        """Reverts channel silencing, thus giving back texting access to everyone for the channel invoked in."""
         channel = ctx.channel
         if channel in self.silented_channels:
             await channel.set_permissions(ctx.guild.default_role, send_messages=True)

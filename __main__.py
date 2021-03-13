@@ -12,11 +12,6 @@ from os import listdir, getenv
 from bot.utilities.prefixes import Prefixes
 from bot.moderation.admin import bot_admin_check
 
-"""TODO: Continue saving prompts for AEGIS, TAG, TYPEWRITER
-Add a hyperlink to the message in FAILURE TO SEND SOURCE CODE
-Disable the option to view administrative source code at all
-Add commands SILENCE, UNSILENCE, SELFMUTE"""
-
 intents = Intents.default()
 intents.reactions = True
 intents.members = True

@@ -3,26 +3,3 @@ help:
     desc: 'Pill''s help index menu. Use the following commands with the prefix **`p!`** to get further information about each commands. [<Hover me!>](https://google.com "Hover over hyperlinks to find out details about the system")'
     author_url: https://cdn.discordapp.com/emojis/818820065834303488.png?v=1
     thumbnail: https://cdn.discordapp.com/attachments/818028373749268502/818822573751795752/helpingboard.png
-  moderation:
-    desc: "__**[Administrative](https://google.com \"Each command needs a it's own native permission\")**__\n`kick (@user) (reason)`\n`ban (@user) (reason)`\n`unban (@user) (reason)`\n`mute (@user)`\n`unmute (@user)`\n`silence (duration)`\n`unsilence (duration)`\n\n__**[User](https://google.com \"Default permissions.\")**__\n`selfmute (duration)`"
-  magic:
-    desc: "`poop`\n`slap (@user)`\n`hug (@user)`\n`diceroll`\n`8ball (question)`\n`ping`\n`gift`\n`rickroll (@user)`\n`joke`"
-  misc:
-    body:
-      [
-        "\n__**[Administrative](https://google.com \"Manage server permission is required!\")**__",
-        "`addrole (name) (hex_color_code) (hoist)`",
-        "`giverole (member) (role)`",
-        "`delrole (@role)`",
-        "`membercounter (voice_channel_id)`",
-        "`membercounter check`",
-        "\n__**[User](https://google.com \"Default permissions.\")**__",
-        "`prefix`",
-        "`avatar (@member)`",
-        "`announce (#channel) (message)`",
-        "`announce here (#channel) (message)`",
-        "`announce everyone (#channel) (message)`",
-        "`userinfo (member)`",
-      ]
-  greet:
-    desc: "This module allows you to send customizable welcome messages when a member joins your server.\nAdding the keywords down below would perform a unique action that allows you to better customize your message.\n\n> **`{{mention}}`**: Mentions the new member\n> **`{{guild}}`**: Says the guild name\n> **`{{user}}`**: Says the name of the new member\n\n__**[Setup](https://google.com \"Manage server permission is required!\")**__\n`welcome (channel) (hex_color_code) (msg)`\n`welcome check`\n`welcome clear`"
