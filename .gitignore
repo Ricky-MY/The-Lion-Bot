@@ -6,3 +6,4 @@ Procfile
 dependencies
 .env
 .vscode
+bot/aegis/owner.py

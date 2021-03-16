@@ -33,9 +33,9 @@ class GetSource(commands.Cog):
 			for sentence in lines[0]:
 				if '@' in list(sentence):
 					decorators += 1
-			start_no = lines[1] - decorators
+			start_no = lines[1]
 			end_no = start_no + len(lines[0])
-			embed.description=f"```py\n{source_code if len(source_code) < 2000 else 'Source code too large for discord, please head over to our open sourced git-hub repository for this inspection.'}```\n\nView the code for `{command.qualified_name}` on github  **[here]https://github.com/Ricky-MY/The-Pill-Bot/blob/main/{'/'.join(path[-(len(path)-path.index('bot')):])}#L{start_no}-L{end_no} \"Main branch\")** and apply for contribution **[here](https://discord.gg/xunWcUs9Rr \"Server invite\")**!"
+			embed.description=f"```py\n{source_code if len(source_code) < 2000 else 'Source code too large for discord, please head over to our open sourced git-hub repository for this inspection.'}```\n\nView the code for `{command.qualified_name}` on github  **[here](https://github.com/Ricky-MY/The-Pill-Bot/blob/main/{'/'.join(path[-(len(path)-path.index('bot')):])}#L{start_no}-L{end_no} \"Main branch\")** and apply for contribution **[here](https://discord.gg/xunWcUs9Rr \"Server invite\")**!"
 			await ctx.reply(embed=embed)
 		else:
 			embed = self.embed.copy()

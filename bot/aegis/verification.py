@@ -31,7 +31,7 @@ class Verifier(commands.Cog):
 		draw = ImageDraw.Draw(image)
 		draw.text((10, 10), key, (255, 255, 255), font=font)
 		for i in range(2):
-			draw.line((0,0), (random.randint(0, w), random.randint(0, h)), fill=255, width = 5)
+			draw.line(((0,0), (random.randint(0, w), random.randint(0, h))), fill=255, width = 5)
 		with io.BytesIO() as output:
 			image.save(output, format="PNG")
 			output.seek(0)
@@ -52,7 +52,7 @@ class Verifier(commands.Cog):
 		user_id = ctx.author.id
 		channel = ctx.channel
 		member = guild.get_member(user_id)
-		capcha, key = self.get_capcha(random.randint(0, 10))
+		capcha, key = self.get_capcha(random.randint(10, 20))
 		cmd_message = ctx.message
 
 		embed = discord.Embed(title='Verification', description=f'Please enter this key in the verification channel', color=self.color)
