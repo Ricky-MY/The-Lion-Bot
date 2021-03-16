@@ -7,7 +7,6 @@ import yaml
 from signal import Signals
 
 from discord.ext import commands
-from discord.ext.commands.errors import MemberNotFound
 
 FORMATTED_CODE_REGEX = re.compile(
     # code delimiter: 1-3 backticks; (?P=block) only matches if it's a block
@@ -46,7 +45,7 @@ class Eval(commands.Cog):
         self.color = config["asthetics"]["mainColor"]
         self.error_color = config["asthetics"]["errorColor"]
 
-    async def upload_output(self, output):
+    async def upload_output(self, output: str) -> str:
         data = bytes(output, 'utf-8')
         async with aiohttp.ClientSession() as cs:
             async with cs.post('https://mystb.in/documents', data = data) as r:
@@ -54,7 +53,7 @@ class Eval(commands.Cog):
                 key = res["key"]
         return f'https://mystb.in/{key}'
 
-    def clean_code(self, content):
+    def clean_code(self, content: str) -> str:
         if content.startswith("```") and content.endswith("```"):
             return "\n".join(content.split("\n")[1:][:-3])
 
