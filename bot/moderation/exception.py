@@ -20,6 +20,13 @@ class ExceptionHandler(commands.Cog):
         self.debug_mode = False
 
     async def raise_norm(self, ctx, error):
+        """
+        Takes in the context and the exception that was raised and formats it 
+        properly for text output. If debug mode is enabled, the exception is 
+        formatted to the likings of an embed and gets delivered to either; 
+        the context channel or the help channel depending on if the command author
+        is an admin or not. If debug mode is disabled, this function prints an exception as normal.
+        """ 
         if self.debug_mode:
             report = ''.join(traceback.format_exception(type(error), error, error.__traceback__))
             embed = discord.Embed(title='🖐️ Unhandled exception...', description=f"```py\n{report + '```' if len(report) < 2000 else report[-2000:] + f'``` and {len(report) - 2000} more characters...'}", color=discord.Color.dark_grey())
@@ -34,18 +41,29 @@ class ExceptionHandler(commands.Cog):
         print(f'Ignoring exception in command {ctx.command}:')
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
-    def get_usage(self, ctx):
+    def get_usage(self, ctx) -> str:
+        """
+        Get the context of the command used to get the usage of the
+        command in the format of prefix:command_name:*arguments
+        """
         return f'{ctx.prefix}{ctx.command.qualified_name} {ctx.command.signature}'
 
     @commands.command(name = "debug", aliases=['d'])
     @commands.check(bot_admin_check)
     async def enable_debug(self, ctx):
-        """Redirect tracebacks from the console to the channel of which the command that caused the error was invoked in."""
+        """
+        Enables debug mode that adjusts raise_norm to redirect tracebacks from the console 
+        to the channel of which the command that caused the error was invoked in(if the command
+        author is the admin of the bot).
+        """
         self.debug_mode = not self.debug_mode
         await ctx.reply(f"Debug mode is turned {'on' if self.debug_mode else 'off'}", mention_author = False)
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx, error: commands.CommandError):
+        """
+        Entry point to catch all errors
+        """
         if hasattr(ctx.command, 'on_error'):
             return
 
@@ -110,6 +128,9 @@ class ExceptionHandler(commands.Cog):
                 await self.raise_norm(ctx, error)
 
 def setup(bot):
+    """
+    Setup function that loads the cog on startup
+    """
     bot.add_cog(ExceptionHandler(bot))
     print('Exception handler is loaded')
 

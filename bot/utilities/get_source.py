@@ -6,6 +6,7 @@ from discord.ext import commands
 
 from bot.moderation.admin import bot_admin_check
 
+
 class GetSource(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
@@ -26,7 +27,15 @@ class GetSource(commands.Cog):
 		if command.cog_name.lower() not in ("aegis", "admin", "exception", "get_source") or (command.cog_name.lower() in ("aegis", "admin", "exception", "get_source") and bot_admin_check(ctx)):
 			embed = self.embed.copy()
 			source_code = inspect.getsource(command.callback)
-			embed.description=f"```py\n{source_code if len(source_code) < 2000 else 'Source code too large for discord, please head over to our open sourced git-hub repository for this inspection.'}```\n\nView the github repository of this bot **[here](https://github.com/Ricky-MY/The-Pill-Bot \"Main branch\")** and apply for contribution **[here](https://discord.gg/xunWcUs9Rr \"Server invite\")**!"
+			path = inspect.getsourcefile(command.callback).split('\\')
+			lines = inspect.getsourcelines(command.callback)
+			decorators = 0
+			for sentence in lines[0]:
+				if '@' in list(sentence):
+					decorators += 1
+			start_no = lines[1] - decorators
+			end_no = start_no + len(lines[0])
+			embed.description=f"```py\n{source_code if len(source_code) < 2000 else 'Source code too large for discord, please head over to our open sourced git-hub repository for this inspection.'}```\n\nView the code for `{command.qualified_name}` on github  **[here]https://github.com/Ricky-MY/The-Pill-Bot/blob/main/{'/'.join(path[-(len(path)-path.index('bot')):])}#L{start_no}-L{end_no} \"Main branch\")** and apply for contribution **[here](https://discord.gg/xunWcUs9Rr \"Server invite\")**!"
 			await ctx.reply(embed=embed)
 		else:
 			embed = self.embed.copy()

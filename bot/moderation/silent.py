@@ -1,5 +1,3 @@
-import discord
-import asyncio
 from discord.ext import commands
 
 def cog_check(ctx):
@@ -11,7 +9,7 @@ class Silent(commands.Cog):
         self.color = 0xC0C0C0
         self.silented_channels = []
     
-    @commands.command(name="silent", aliases=["silence", "hush", "nightnight", "sleepy"])
+    @commands.command(name="silent", aliases=["silence", "hush", "bedtime", "sleepy"])
     @commands.has_guild_permissions(manage_channels = True)
     async def silent(self, ctx):
         """Removes texting access from everyone on the channel invoked in."""

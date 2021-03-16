@@ -18,7 +18,9 @@ class Misc(commands.Cog):
 	@commands.guild_only()
 	@commands.has_guild_permissions(manage_roles=True)
 	async def addrole(self, ctx, name, hex_colour_code=discord.Colour.default(), hoist=False):
-		"""Creates a role with basic permissions and a specifiable name, color and hoist choices."""
+		"""
+		Creates a role with basic permissions and a specifiable name, color and hoist choices.
+		"""
 		guild = ctx.guild
 		role = await guild.create_role(name=name, colour=hex_colour_code, hoist=hoist)
 		embed = discord.Embed(
@@ -31,7 +33,9 @@ class Misc(commands.Cog):
 	@commands.guild_only()
 	@commands.has_guild_permissions(manage_roles=True)
 	async def delrole(self, ctx, *, roles: commands.Greedy[discord.Role]):
-		"""Remove roles in bulk."""
+		"""
+		Remove roles in bulk.
+		"""
 		for role in roles:
 			await role.delete()
 			await asyncio.sleep(0.3)
@@ -43,12 +47,16 @@ class Misc(commands.Cog):
 	@commands.command(name="avatar", aliases=['profile'])
 	@commands.guild_only()
 	async def avatar(self, ctx, member: discord.Member = None):
-		"""Retrieves the avatar of a user."""
+		"""
+		Retrieves the avatar of a user.
+		"""
 		await ctx.reply(member.avatar_url if member is not None else ctx.author.avatar_url, mention_author=False)
 
 	@commands.command(name="invite")
 	async def invite(self, ctx):
-		"""Gets the invite link for the support server of the bot."""
+		"""
+		Gets the invite link for the support server of the bot.
+		"""
 		await ctx.send('https://discord.gg/mh7pZ8K')
 
 	@commands.command(name="userinfo", aliases=['details', 'memberinfo', 'info'])
