@@ -88,7 +88,7 @@ class ExceptionHandler(commands.Cog):
 
         if isinstance(error, errors.Forbidden):
             embed = discord.Embed(title='🖐️ Hold it...', description=f"⁉️ Required permission is missing or unattainable.", color=self.error_color)
-            embed.set_footer(text="Unable to carry out this task. Chances are.. the bot does not have required permissions for this.")
+            embed.set_footer(text="Unable to carry out this task.")
             await ctx.send(embed=embed)
 
         if isinstance(error, commands.MissingRequiredArgument):

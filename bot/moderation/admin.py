@@ -6,11 +6,10 @@ from discord.ext import commands
 from discord.ext.commands.errors import ExtensionNotFound
 from discord.ext.commands.errors import ExtensionNotLoaded
 
+from bot.utilities.prefixes import Prefixes
+
 def bot_admin_check(ctx):
 	return ctx.message.author.id == 368671236370464769
-
-def has_higher_role(author, comparable):
-	return author.top_role >= comparable.top_role
 
 class Admin(commands.Cog):
 	

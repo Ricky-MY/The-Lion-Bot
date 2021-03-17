@@ -1,12 +1,8 @@
-from datetime import datetime
+from types import prepare_class
 import discord
-
-from typing import Optional
-
-from discord.ext.commands.context import Context
-
-from bot.moderation.admin import has_higher_role
 from discord.ext import commands, tasks
+
+from datetime import datetime
 
 AWARENESS = 1
 
@@ -21,12 +17,7 @@ class Mute(commands.Cog):
         if member in [i[0] for i in self.timed_muted_list]:
             await member.add_roles(self.mute_role)
 
-    def find_mute_role(self, member: discord.Member) -> Optional[discord.Role]:
-        for role in member.roles:
-            if not role.permissions.send_messages:
-                return role
-
-    async def get_mute_role(self, guild: discord.Guild) -> Optional[discord.Role]:
+    async def get_mute_role(self, guild):
         """
         Gets the context to get the guild where the command was invoked in.
         Loops through the roles inside the guild to find a mute role and returns
@@ -41,7 +32,7 @@ class Mute(commands.Cog):
             await channel.set_permissions(mute, overwrite=muting)
         return mute
 
-    async def enforce_mute(self, ctx: Context, member: discord.Member):
+    async def enforce_mute(self, ctx, member):
         """
         Performs the action that restricts send_message permissions
         from the user
@@ -49,7 +40,7 @@ class Mute(commands.Cog):
         role = await self.get_mute_role(ctx.guild)
         await member.add_roles(role)
 
-    async def timeit_tempmute(self, member: discord.Member, time: int):
+    async def timeit_tempmute(self, member, time):
         """
         Gets the member and the time. Calculates the ending time of the mute and
         appends the member and endtime to an instance variable. 
@@ -69,7 +60,7 @@ class Mute(commands.Cog):
         self.timed_muted_list.append(
             (member, (expiry_time_H, expiry_time_M, expiry_time_S)))
 
-    def get_duration_tempmute(self, time: int):
+    def get_duration_tempmute(self, time):
         """
         Converts the time passed in into minutes using a definator
         passed in and returns it.
@@ -98,45 +89,39 @@ class Mute(commands.Cog):
     @commands.command(name="permanentmute", aliases=["permute", "permmute", "pmute"])
     @commands.has_guild_permissions(mute_members=True)
     @commands.guild_only()
-    async def permanent_mute(self, ctx: Context, member: discord.Member):
+    async def permanent_mute(self, ctx, member: discord.Member):
         """
         Permanently restrict send message access from the user. 
         This process is evadable by re-join. Consider using blacklist.
         """
-        if not has_higher_role(ctx.author, member):
-            await ctx.message.reply("🔴 You can't do this action. Your attempt is recorded.")
-            return
         mute_role = await self.get_mute_role(ctx.guild)
-        if (member not in self.timed_muted_list) and (mute_role not in member.roles):
+        if member not in [i[0] for i in self.timed_muted_list] and mute_role not in member.roles:
             await self.enforce_mute(ctx, member)
             await ctx.reply(f"🗣️👌 {member} is permanently muted by {ctx.author.mention}.")
-        elif (member in self.timed_muted_list) or (mute_role in member.roles):
+        else:
             await ctx.reply("⁉️ Member already muted.")
 
     @commands.command(name="mute", aliases=["tmute", "tempmute", "nightnight"])
     @commands.has_guild_permissions(mute_members=True)
     @commands.guild_only()
-    async def temporary_mute(self, ctx: Context, member: discord.Member, time='10m'):
+    async def temporary_mute(self, ctx, member: discord.Member, time='10m'):
         """
         Temporarily restrict send message access from a user for a set amount of time. 
         If no duration is provided, the user will be muted for 10 minutes. 
         This process is unevadable by re-joins.
         """
-        if not has_higher_role(ctx.author, member):
-            await ctx.message.reply("🔴 You can't do this action. Your attempt is recorded.")
-            return
         mute_role = await self.get_mute_role(ctx.guild)
-        if (member not in self.timed_muted_list) and (mute_role not in member.roles):
+        if member not in [i[0] for i in self.timed_muted_list] and mute_role not in member.roles:
             mode, time, realtime = self.get_duration_tempmute(time)
             await self.timeit_tempmute(member, time)
             await self.enforce_mute(ctx, member)
             await ctx.reply(f"🗣️👌 {member} is muted by {ctx.author.mention} for {realtime} {mode + 's' if time > 1 else mode}.")
-        elif (member in self.timed_muted_list) or (mute_role in member.roles):
+        else:
             await ctx.reply("⁉️ Member already muted.")
 
     @commands.command(name="selfmute", aliases=["smute", "zoology"])
     @commands.guild_only()
-    async def self_temporary_mute(self, ctx: Context, time='10m'):
+    async def self_temporary_mute(self, ctx, time='10m'):
         """
         Restrict send message access for yourself server-wide. 
         If no duration is provided, you will be muted for 10 minutes. 
@@ -154,7 +139,7 @@ class Mute(commands.Cog):
 
     @commands.command(name="mutesetup")
     @commands.has_guild_permissions(mute_members=True)
-    async def mute_setup(self, ctx: Context):
+    async def mute_setup(self, ctx):
         """
         Prepares the server for a mute role that strips away send message access from the user.
         """
@@ -166,7 +151,7 @@ class Mute(commands.Cog):
 
     @commands.command(name="unmute")
     @commands.has_guild_permissions(mute_members=True)
-    async def unmute(self, ctx: Context, member: discord.Member):
+    async def unmute(self, ctx, member: discord.Member):
         """
         Removes an active mute from a user whether it be permanent or temporary.
         """
@@ -186,10 +171,9 @@ class Mute(commands.Cog):
     @tasks.loop(minutes=AWARENESS)
     async def remove_timed_muted(self):
         H, M, S = (int(datetime.now().strftime("%H")),
-                int(datetime.now().strftime("%M")),
-                int(datetime.now().strftime("%S")))
+                   int(datetime.now().strftime("%M")),
+                   int(datetime.now().strftime("%S")))
         for entry in self.timed_muted_list:
-            mute_role = self.find_mute_role(entry[0])
             if entry[1][0] < H:  # by hour difference
                 self.timed_muted_list.remove(entry)
                 await entry[0].remove_roles(mute_role)
