@@ -1,10 +1,17 @@
+# JUNK FILES
 *.txt
 *.log
 *.pyc
-debugger.py
-Procfile
-dependencies
 .env
 .vscode
+
+# Un-supported debugger
+debugger.py
+
+# HEROKU REQS
+Procfile
+dependencies
+
+# SPECIFIED HIDDEN FILES
 bot/aegis/owner.py
 bot/utilities/_test.py
