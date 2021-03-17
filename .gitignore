@@ -7,3 +7,4 @@ dependencies
 .env
 .vscode
 bot/aegis/owner.py
+bot/utilities/_test.py
