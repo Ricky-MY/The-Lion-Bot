@@ -1,9 +1,12 @@
 # JUNK FILES
 *.txt
+*.json
 *.log
 *.pyc
-.env
-.vscode
+
+# HIDDEN BETA APPLICATIONS
+.*
+_*
 
 # VENV FILES
 dependencies
