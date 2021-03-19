@@ -20,7 +20,7 @@
 * SnekBox / Eval
 
 ### Explaination
-<detail
+<details>
 <summary>Modules</summary>
 <div>
 
