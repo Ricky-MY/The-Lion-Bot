@@ -1,5 +1,0 @@
-help:
-  main:
-    desc: 'Pill''s help index menu. Use the following commands with the prefix **`p!`** to get further information about each commands. [<Hover me!>](https://google.com "Hover over hyperlinks to find out details about the system")'
-    author_url: https://cdn.discordapp.com/emojis/818820065834303488.png?v=1
-    thumbnail: https://cdn.discordapp.com/attachments/818028373749268502/818822573751795752/helpingboard.png
