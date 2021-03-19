@@ -3,8 +3,9 @@
 ![PILL ICON](https://raw.githubusercontent.com/Ricky-MY/The-Pill-Bot/main/bot/assets/pngtree_pillcartoon.png)
 
 ## Table of Contents
-* 1. [About](#about)
-* 2. [Bot Explanation](#explanation)
-* 3. [Installation](#installation)
+1. [Overview](#overview)
+2. [About](#)
+2. [Explanation](#) 
+3. [Installation](#)
 
-### About 
+### Overview
