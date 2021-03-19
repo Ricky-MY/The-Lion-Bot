@@ -5,13 +5,5 @@
 .env
 .vscode
 
-# Un-supported debugger
-debugger.py
-
-# HEROKU REQS
-Procfile
+# VENV FILES
 dependencies
-
-# SPECIFIED HIDDEN FILES
-bot/aegis/owner.py
-bot/utilities/_test.py
