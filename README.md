@@ -1,11 +1,10 @@
-# The Lion
+# The Pill Bot
 
-[![discord.py](https://img.shields.io/pypi/pyversions/discord.py.svg)](https://pypi.python.org/pypi/discord.py)
-[![pypi](https://img.shields.io/pypi/v/discord.py.svg)](https://pypi.python.org/pypi/discord.py)
+![PILL ICON](https://raw.githubusercontent.com/Ricky-MY/The-Pill-Bot/main/bot/assets/pngtree_pillcartoon.png)
 
 ## Table of Contents
-* 1. [General Info](#general-info)
+* 1. [About](#about)
 * 2. [Bot Explanation](#explanation)
 * 3. [Installation](#installation)
 
-### TO BE REWRITTEN
+### About 
