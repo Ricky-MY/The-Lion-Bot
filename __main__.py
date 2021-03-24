@@ -1,9 +1,7 @@
-from os import getenv
-from dotenv import load_dotenv
 from discord import Intents, Status, Game
 from discord.ext import commands
 
-from bot.constants import Defaults
+from bot.constants import Defaults, Tokens
 from bot.utils.extensions import EXTENSIONS
 
 intents = Intents.default()
@@ -23,6 +21,4 @@ async def on_ready():
 for ext in EXTENSIONS:
     bot.load_extension(ext)
 
-load_dotenv()
-TOKEN = getenv('TOKEN')
-bot.run(TOKEN)
+bot.run(Tokens.DISCORD_TOKEN)
