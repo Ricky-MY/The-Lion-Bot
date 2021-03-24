@@ -62,69 +62,71 @@ A in-depth documentation of all the `modules`, `commands` and `concepts` with ex
 <div>
 
 ---
+**Moderation Commands**
+| Usage|Explaination|  
+| -----| ----------
+|`p!mutesetup `|Prepares the server for a mute role that strips away send message access from the user.|
+|`p!permanentmute <member>`|Permanently restrict send message access from the user. |
+|`p!mute <member> [time=10m]`|Temporarily restrict send message access from a user for a set amount of time. |
+|`p!selfmute [time=10m]`|Restrict send message access for yourself server-wide. |
+|`p!unmute <member>`|Removes an active mute from a user whether it be permanent or temporary.|
+|`p!ban <member> [reason=Unspecified]`|Places a permanent ban on a user.|
+|`p!silent `|Removes texting access from everyone on the channel invoked in.|
+|`p!unban <id_> [reason=Unspecified]`|Lifts an active ban on a user.|
+|`p!clear [amount=5] [user]`|Removes a certain amount of messages from the channel of which the command is used in. |
+|`p!kick <member> [reason=Unspecified]`|Removes a user from the server. Beware that the user can still re-join, |
+|`p!unsilent `|Reverts channel silencing, thus giving back texting access to everyone for the channel invoked in.|
+
+---
+**Utility Commands**
+| Usage|Explaination|
+| -----| ----------
+|`p!thread <channel> <color> <properties>`||
+|`p!prefix `||
+|`p!code <command>`|Reveals the source code of a command. Source code relating administrative modules or anti-nuke modules are prohibited from visibility.|
+
+---
 **Admin Commands**
 | Usage|Explaination|
-| -----| -----------|
-|`p!load <extension>`|Loads a unloaded cog to the bot.|
-|`p!unload <extension>`|Unloads an loaded cog to the bot.|
-|`p!reload <extension>`|Reloads a loaded cog to the bot.|
-|`p!restart `|Reloads every cog connected to the bot.|
+| -----| ----------
+|`p!debug `|Enables debug mode that adjusts raise_norm to redirect tracebacks from the console |
+
+---
+**Advance Commands**
+| Usage|Explaination|
+| -----| ----------
+|`p!allcommands `||
+|`p!eval <code>`|Runs python code provided in a sandbox and returns the value. |
+
+---
+**Games Commands**
+| Usage|Explaination|
+| -----| ----------
+|`p!rickroll [member]`|Sends a trustable looking link or a gif that later unveils to be a rickroll. Caution: this may cause massive emotional damage towards the victim.|        
+|`p!8ball <text>`|Basic 8 ball command that answers your question with answers ranging from an astounding yes to an absolute no.|
+|`p!connectfour <opponent>`|Connect four is a game of vertical checkers with whoever succeeds to place down 4 straight ellipses wins.|
+|`p!joke `|Sends a random joke|
+|`p!latency `|Shows bot's latency to the discord server|
+|`p!poop `|Pooping publicly in random places. Caution; can lead to an immediate arrests for indecent exposure|
+|`p!slap [member]`|Slaps a user. If no user is mentioned, a random user is picked.|
+|`p!hug [member]`|Hugs a user. If no user is mentioned, it will hug a random user.|
+|`p!diceroll [sides=6]`|A dice roll. The dice has 6 sides by default but you can still pass in sides as an argument|
+|`p!selfban [reason=Unspecified reason]`|Fake ban or a self ban that does not ban the user in actuality.|
+|`p!kiss <member>`|Kisses a user. If no user is mentioned, it will kiss a random user, ouch! That might be a bit awkward.|
+
 ---
 **Miscellaneous Commands**
 | Usage|Explaination|
-| -----| -----------|
-|`p!membercounter <channel>`|Setup a member counter|
-|`p!prefix`|Gets the local prefix for the bot|
-|`p!migrate <ini_id> <end_id>`|Move a body of people from one channel to another|
-|`p!avatar [member]`|Retrieves the avatar of a user|
+| -----| ----------
+|`p!invite `|Gets the invite link for the support server of the bot.|
+|`p!gtag <name>`||
 |`p!addrole <name> [hex_colour_code=#000000] [hoist=False]`|Creates a role with basic permissions and a specifiable name, color and hoist choices.|
 |`p!delrole [roles]...`|Remove roles in bulk.|
-|`p!userinfo [member]`|Displays user information such as; ID, nitro status, date of creation, date of joining the current guild etc... |
-|`p!gtag <name>`|Retrieves a global tag by name|
-|`p!thread <channel> <color> <properties>`|Creating an embed|
----
-**Moderation Commands**
-| Usage|Explaination|
-| -----| -----------|
-|`p!mute <member> [time=10m]`|Temporarily restrict send message access from a user for a set amount of time. |
-|`p!permanentmute <member>`|Permanently restrict send message access from the user. |
-|`p!mutesetup `|Prepares the server for a mute role that strips away send message access from the user.|
-|`p!selfmute [time=10m]`|Restrict send message access for yourself server-wide.|
-|`p!unmute <member>`|Removes an active mute from a user whether it be permanent or temporary.|
-|`p!selfban [reason=Unspecified reason]`|Fake ban or a self ban that does not ban the user in actuality.|
-|`p!ban <member> [reason=Unspecified]`|Places a permanent ban on a user.|
-|`p!unban <id_> [reason=Unspecified]`|Lifts an active ban on a user.|
-|`p!kick <member> [reason=Unspecified]`|Removes a user from the server. Beware that the user can still re-join, |
-|`p!silent `|Removes texting access from everyone on the channel invoked in.|
-|`p!unsilent `|Reverts channel silencing, thus giving back texting access to everyone for the channel invoked in.|
-|`p!clear [amount=5] [user]`|Removes a certain amount of messages from the channel of which the command is used in.|
----
-**Game Commands**
-| Usage|Explaination|
-| -----| ----------
-|`p!connectfour <opponent>`|Connect four is a game of vertical checkers with whoever succeeds to place down 4 straight ellipses wins.|
-|`p!diceroll [sides=6]`|A dice roll. The dice has 6 sides by default but you can still pass in sides as an argument|
----
-**Fun Commands**
-| Usage|Explaination|
-| -----| ----------
-|`p!hug [member]`|Hugs a user. If no user is mentioned, it will hug a random user.|
-|`p!poop`|Pooping publicly in random places. Caution; can lead to an immediate arrests for indecent exposure|
-|`p!slap [member]`|Slaps a user. If no user is mentioned, a random user is picked.|
-|`p!8ball <text>`|Basic 8 ball command that answers your question with answers ranging from an astounding yes to an absolute no.|
-|`p!invite `|Gets the invite link for the support server of the bot.|
-|`p!kiss <member>`|Kisses a user. If no user is mentioned, it will kiss a random user, ouch`p! That might be a bit awkward.|
-|`p!joke `|Sends a random joke|
+|`p!avatar [member]`|Retrieves the avatar of a user.|
+|`p!migrate <ini_id> <end_id>`||
+|`p!userinfo [member]`||
+|`p!membercounter <channel>`||
 |`p!help [module]`|Main help command that shows you an index of all the modules and their respective help command.|
-|`p!rickroll [member]`|Sends a trustable looking link or a gif that later unveils to be a rickroll. Caution: this may cause massive emotional damage towards the victim.|
-|`p!latency `|Shows bot's latency to the discord server|
----
-**Meta Commands**
-| Usage|Explaination|
-| -----| ----------
-|`p!eval <code>`|Runs python code provided in a sandbox and returns the value. |
-|`p!code <command>`|Reveals the source code of a command. Source code relating administrative modules or anti-nuke modules are prohibited from visibility.|
-|`p!debug `|Enables debug mode that adjusts raise_norm to redirect tracebacks from the console |
 
 </div>
 </details>
