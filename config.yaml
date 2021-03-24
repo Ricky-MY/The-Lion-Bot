@@ -1,6 +1,6 @@
 # Global bot attributes
 bot:
-  prefix: '!'
+  prefix: 'p!'
   admins: [368671236370464769]
 
 # Consistent styling
