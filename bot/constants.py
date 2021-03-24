@@ -1,4 +1,6 @@
 from yaml import load, SafeLoader
+from os import getenv
+from dotenv import load_dotenv
 
 with open("config.yaml", 'r') as file:
     _CONFIGURATION = load(file, Loader=SafeLoader)
@@ -24,3 +26,9 @@ class Props:
     CHARACTER_URL = _['character']
     HELP_BOARD = _['help_board']
     HELP_DESCRIPTION = _['help_desc']
+
+class Tokens:
+    load_dotenv()
+    DISCORD_TOKEN = getenv('TOKEN')
+    GITHUB_TOKEN = getenv('GITHUB')
+    
